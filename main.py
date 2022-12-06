@@ -129,7 +129,6 @@ while is_working:
     if pressed_keys[K_RIGHT] and ball_rect.right  < width:
         ball_rect = ball_rect.move(ball_speed, 0)
        
-
     if pressed_keys[K_LEFT] and ball_rect.left > 0:
         ball_rect = ball_rect.move(-ball_speed, 0)  
 
