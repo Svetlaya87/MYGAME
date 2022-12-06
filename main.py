@@ -43,6 +43,7 @@ pygame.time.set_timer(CREATE_ENEMY, 1500)
 
 enemies = []
 
+
 def create_bonus():
     bonus = pygame.Surface( (20, 20) ) #додано в уроці 2
     print( *bonus.get_size() )
@@ -57,7 +58,9 @@ pygame.time.set_timer(CREATE_BONUS, 1000)
 
 bonuses = []
 
+
 is_working = True
+
 
 while is_working:
     FPS.tick(40)
@@ -105,6 +108,7 @@ while is_working:
         if ball_rect.colliderect( enemy[1] ):
             enemies.pop( enemies.index(enemy) )
 
+
     for bonus in bonuses:
         bonus[1] =  bonus[1].move( 0, bonus[2])
         main_surface.blit(bonus[0], bonus[1])
@@ -117,8 +121,6 @@ while is_working:
             bonuses.pop( bonuses.index(bonus) ) 
 
     if pressed_keys[K_DOWN] and ball_rect.bottom < height:
-       
-
         ball_rect = ball_rect.move(0, ball_speed)
     
     if pressed_keys[K_UP] and ball_rect.top > 0:
