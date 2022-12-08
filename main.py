@@ -2,8 +2,7 @@ import time
 import random
 from pathlib import Path
 import pathlib
-
-
+from os import listdir
 
 import pygame
 from pygame.constants import QUIT, K_DOWN, K_UP, K_LEFT, K_RIGHT
@@ -30,7 +29,6 @@ GREEN = 50, 205, 50 це бонусы
 #randomColor = random.randint(0, 256), random.randint(0, 256), random.randint(0, 256) в першому заннятті колір квадратика змінювався рандомно при відскочуванні від стіни
 """
 
-
 font = pygame.font.SysFont("Verdana", 20)
 
 print(screen)
@@ -49,8 +47,10 @@ BONUS  = Path('img', 'bonus.png')
 PLAYER = Path('img','player.png')
 BACKGROUND = Path('img', 'background.png')
 
+IMGS_PATH = 'img/bandera-goose'
 
-ball = pygame.transform.scale( pygame.image.load(PLAYER).convert_alpha(), ( 104, 44) )
+player_imgs = [pygame.transform.scale( pygame.image.load(IMGS_PATH + '/' + file ).convert_alpha(), ( 104, 44) ) for file in listdir( IMGS_PATH ) ]
+ball = player_imgs[0]
 ball_rect = ball.get_rect()
 ball_speed = 10 #less 2
 
@@ -87,7 +87,10 @@ pygame.time.set_timer(CREATE_ENEMY, 1500)
 CREATE_BONUS = pygame.USEREVENT + 2
 pygame.time.set_timer(CREATE_BONUS, 1000)
 
+CHANGE_IMG = pygame.USEREVENT + 3
+pygame.time.set_timer(CHANGE_IMG, 125)
 
+img_index = 0
 scores = 0
 
 enemies = []
@@ -112,6 +115,14 @@ while is_working:
 
         if event.type == CREATE_BONUS:
             bonuses.append( create_bonus() )
+
+        if event.type ==CHANGE_IMG:
+            img_index = img_index +1 
+
+            if img_index == len(player_imgs):
+                img_index = 0
+            ball = player_imgs[img_index]  
+            
 
     """
     Частина з уроку 1
