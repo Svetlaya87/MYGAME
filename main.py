@@ -8,9 +8,6 @@ import pygame
 from pygame.constants import QUIT, K_DOWN, K_UP, K_LEFT, K_RIGHT
 
 
-
-
-
 pygame.init()
 
 FPS = pygame.time.Clock()
@@ -50,9 +47,9 @@ BACKGROUND = Path('img', 'background.png')
 IMGS_PATH = 'img/bandera-goose'
 
 player_imgs = [pygame.transform.scale( pygame.image.load(IMGS_PATH + '/' + file ).convert_alpha(), ( 104, 44) ) for file in listdir( IMGS_PATH ) ]
-ball = player_imgs[0]
-ball_rect = ball.get_rect()
-ball_speed = 10 #less 2
+player = player_imgs[0]
+player_rect = player.get_rect()
+player_speed = 10 #less 2
 
 
 def create_enemy():
@@ -121,22 +118,22 @@ while is_working:
 
             if img_index == len(player_imgs):
                 img_index = 0
-            ball = player_imgs[img_index]  
+            player = player_imgs[img_index]  
             
 
     """
     Частина з уроку 1
-    ball_rect = ball_rect.move(ball_speed)
+    player_rect = player_rect.move(player_speed)
 
     #randomColor = random.triangular(0, 256, 155), random.triangular(0, 256, 155), random.triangular(0, 256, 155)
     randomColor = random.randint(0, 256), random.randint(0, 256), random.randint(0, 256)
 
-    if ball_rect.bottom >= height or ball_rect.top <= 0:
-        ball_speed[1] = -ball_speed[1]
+    if player_rect.bottom >= height or player_rect.top <= 0:
+        player_speed[1] = -player_speed[1]
         ball.fill( randomColor )
 
-    if ball_rect.right >= width or ball_rect.left <= 0:
-        ball_speed[0] = -ball_speed[0]
+    if player_rect.right >= width or player_rect.left <= 0:
+        player_speed[0] = -player_speed[0]
         ball.fill( randomColor )
     """    
 
@@ -157,7 +154,7 @@ while is_working:
     main_surface.blit( bg, ( bgX, 0 ) )
     main_surface.blit( bg, ( bgX2, 0 ) )
 
-    main_surface.blit(ball, ball_rect )
+    main_surface.blit(player, player_rect )
 
     main_surface.blit( font.render( str(scores), True, BLACK), (width-30, 0 ) )
 
@@ -168,7 +165,7 @@ while is_working:
         if enemy[1].left < 0:
             enemies.pop( enemies.index(enemy) )
 
-        if ball_rect.colliderect( enemy[1] ):
+        if player_rect.colliderect( enemy[1] ):
             #enemies.pop( enemies.index(enemy) ) less 2
             is_working = False #+lesson 3
 
@@ -180,21 +177,21 @@ while is_working:
         if bonus[1].bottom > height:
             bonuses.pop( bonuses.index(bonus) )
 
-        if ball_rect.colliderect( bonus[1] ):
+        if player_rect.colliderect( bonus[1] ):
             bonuses.pop( bonuses.index(bonus) ) 
             scores = scores + 1 #такий запис для мене більш зрозумілий
 
-    if pressed_keys[K_DOWN] and ball_rect.bottom < height:
-        ball_rect = ball_rect.move(0, ball_speed)
+    if pressed_keys[K_DOWN] and player_rect.bottom < height:
+        player_rect = player_rect.move(0, player_speed)
     
-    if pressed_keys[K_UP] and ball_rect.top > 0:
-        ball_rect = ball_rect.move(0, -ball_speed)
+    if pressed_keys[K_UP] and player_rect.top > 0:
+        player_rect = player_rect.move(0, -player_speed)
 
-    if pressed_keys[K_RIGHT] and ball_rect.right  < width:
-        ball_rect = ball_rect.move(ball_speed, 0)
+    if pressed_keys[K_RIGHT] and player_rect.right  < width:
+        player_rect = player_rect.move(player_speed, 0)
        
-    if pressed_keys[K_LEFT] and ball_rect.left > 0:
-        ball_rect = ball_rect.move(-ball_speed, 0)  
+    if pressed_keys[K_LEFT] and player_rect.left > 0:
+        player_rect = player_rect.move(-player_speed, 0)  
 
 
     pygame.display.flip()   
