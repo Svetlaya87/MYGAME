@@ -10,6 +10,7 @@ from pygame.constants import QUIT, K_DOWN, K_UP, K_LEFT, K_RIGHT
 
 pygame.init()
 
+
 FPS = pygame.time.Clock()
 """
 width, height = 800, 600
@@ -63,12 +64,14 @@ def create_enemy():
 
 
 def create_bonus():
+    """
     #bonus = pygame.Surface( (20, 20) ) #додано в уроці 2
     #bonus.fill(GREEN)  #додано в уроці 2
-    
-    bonus = pygame.transform.scale( pygame.image.load(BONUS).convert_alpha(), ( 87, 145 ))
+     """
 
-    bonus_rect = pygame.Rect( random.randint(0, width-bonus.get_size()[0]), 0, *bonus.get_size())
+    bonus = pygame.transform.scale( pygame.image.load(BONUS).convert_alpha(), ( 87, 145 ))
+    bonus_rect = pygame.Rect( random.randint(0, width-bonus.get_size()[0]), 0-bonus.get_size()[0], *bonus.get_size()) 
+    #0-bonus.get_size()[0]-так бонуси з'являються поступово. Якщо б гусак знаходиться біля межі вікна гри, де з'являється бонус, то бонус просто б блимкнув і пропав, ми навіть і не помітили б його.
     bonus_speed = random.randint(2,5) #less 2
     return [bonus, bonus_rect, bonus_speed]
 
@@ -151,6 +154,7 @@ while is_working:
     if bgX2 < -bg.get_width():
         bgX2 = bg.get_width()
 
+
     main_surface.blit( bg, ( bgX, 0 ) )
     main_surface.blit( bg, ( bgX2, 0 ) )
 
@@ -174,6 +178,7 @@ while is_working:
         bonus[1] =  bonus[1].move( 0, bonus[2])
         main_surface.blit(bonus[0], bonus[1])
 
+
         if bonus[1].bottom > height:
             bonuses.pop( bonuses.index(bonus) )
 
@@ -195,7 +200,7 @@ while is_working:
 
 
     pygame.display.flip()   
-    #time.sleep(0.006) 
+    time.sleep(0.006) 
 
 
 
